@@ -1,32 +1,23 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+	<div id="app">
+		<router-view />
+		<SideBar />
+		<ConfirmModal />
+		<Toast />
+	</div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import SideBar from './components/side-bar.vue'
+import ConfirmModal from './components/confirm-modal.vue'
+import Toast from './components/toast.vue'
+export default {
+	components: {
+		SideBar,
+		ConfirmModal,
+		Toast,
+	},
 }
+</script>
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+<style lang="scss"></style>

@@ -1,0 +1,28 @@
+@import url('./ui.scss');
+@import url('./side-bar.css');
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+button {
+	font-family: Roboto, sans-serif;
+	font-style: normal;
+	font-weight: 400;
+}
+
+body {
+	background: #f7f7f7;
+}
