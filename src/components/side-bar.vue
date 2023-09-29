@@ -10,7 +10,6 @@
 				open: isOpen,
 			}">
 			<div class="header">
-				{{ disabledButton }}
 				<div
 					@click="closeSideBar"
 					class="header__close">
@@ -32,7 +31,7 @@
 						:key="user.id"
 						:user="user"
 						@set-range="setRange"
-						@remove-selected="removeSelected" />
+						@remove-selected="REMOVE_SELECTED(user.id)" />
 				</template>
 			</div>
 			<div class="footer">
@@ -45,7 +44,7 @@
 						{{ submitButton }}
 					</button>
 					<button
-						@click="cancelChanges"
+						@click="CLOSE_AND_CLEAR"
 						:disabled="disabledButton"
 						class="btn btn-plain"
 						type="button">
@@ -63,6 +62,7 @@ import CustomSelect from '@/components/custom-select.vue'
 import Timeline from '@/components/timeline.vue'
 import EmptyRanges from '@/components/empty-ranges.vue'
 import RangeSlider from '@/components/range-slider.vue'
+import Toast from '@/components/toast.vue'
 export default {
 	name: 'side-bar',
 	data() {
@@ -70,7 +70,7 @@ export default {
 			selectedUsers: [],
 		}
 	},
-	components: { CustomSelect, Timeline, EmptyRanges, RangeSlider },
+	components: { CustomSelect, Timeline, EmptyRanges, RangeSlider, Toast },
 	computed: {
 		...mapState({
 			isOpen: (s) => s.sideBar.isOpen,
@@ -114,10 +114,12 @@ export default {
 		...mapMutations({
 			OPEN_CONFIRM: 'confirm/OPEN_CONFIRM',
 			CLOSE_SIDEBAR: 'sideBar/CLOSE_SIDEBAR',
+			CLOSE_AND_CLEAR: 'sideBar/CLOSE_AND_CLEAR',
 			UN_SELECT_ALL: 'users/UN_SELECT_ALL',
 			SET_VALUES: 'users/SET_VALUES',
 			SAVE_SCENARIO: 'scenarios/SAVE_SCENARIO',
 			SUBMIT_EDIT_SCENARIO: 'scenarios/SUBMIT_EDIT_SCENARIO',
+			REMOVE_SELECTED: 'users/REMOVE_SELECTED',
 		}),
 		closeSideBar() {
 			if (this.disabledButton) {
@@ -128,11 +130,6 @@ export default {
 		},
 		setRange(data) {
 			this.SET_VALUES(data)
-		},
-		cancelChanges() {
-			// this.selectedUsers = []
-			// this.UN_SELECT_ALL()
-			console.log('Відмінити')
 		},
 		submit() {
 			this.isEditScenario ? this.saveChanges() : this.addNewScenario()
@@ -148,9 +145,6 @@ export default {
 		saveChanges() {
 			let data = JSON.parse(JSON.stringify(this.selectedUsers))
 			this.SUBMIT_EDIT_SCENARIO(data)
-		},
-		removeSelected() {
-			console.log('Remove selected');
 		},
 	},
 }

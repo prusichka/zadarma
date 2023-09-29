@@ -64,6 +64,10 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
+	@media (max-width: 375px) {
+		padding: 48px 32px;
+	}
 	&__img {
 		width: 122px;
 		height: 32px;

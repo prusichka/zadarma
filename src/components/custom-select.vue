@@ -79,7 +79,14 @@ export default {
 			selectedUsers: 'users/getSelectedUsers',
 		}),
 		usersToShow() {
-			return this.localSelected.map((el) => el.number).toString() || ''
+			return this.selectedUsers.map((el) => el.number).toString() || ''
+		},
+		selectedIds() {
+			return this.selectedUsers.map((el) => {
+				if (el.checked) {
+					return el.id
+				}
+			})
 		},
 	},
 	watch: {
@@ -96,6 +103,16 @@ export default {
 				this.localSelected = []
 				this.localUsers = []
 			}
+		},
+		selectedUsers: {
+			handler() {
+				this.localUsers = this.localUsers.map((user) => {
+					let findSelected = this.selectedIds.find((el) => el === user.id)
+					user.checked = findSelected === user.id ? true : false
+					return user
+				})
+			},
+			deep: true,
 		},
 	},
 	methods: {
